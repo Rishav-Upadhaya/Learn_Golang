@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"golangproject/day4"
 	"golangproject/day5"
+	"golangproject/day6"
 	"log"
 	"math"
 	"strings"
@@ -104,6 +105,15 @@ func main() {
 	defer log.Println("deferred function called")
 	log.Println("Normal execution")
 	log.Println("Second Normal Execution")
+
+	err = day6.ValidateField("ktm", "address")
+	if err != nil {
+		log.Println(err.Error())
+	}
+	err = day6.ValidateField("r", "name")
+	if err != nil {
+		log.Println(err.Error())
+	}
 
 }
 
