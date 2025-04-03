@@ -1,9 +1,13 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"golangproject/day4"
 	"golangproject/day5"
+	"log"
+	"math"
+	"strings"
 )
 
 func add(numbers ...int) (int, int, string) {
@@ -14,6 +18,16 @@ func add(numbers ...int) (int, int, string) {
 	}
 	return sum, len(numbers), string("successful addition")
 }
+
+func CalculateSquareRoot(x float64) (*float64, error) {
+	if x < 0 {
+		return nil, errors.New("negative value appear")
+	} else {
+		sqrt := math.Sqrt(x)
+		return &sqrt, nil
+	}
+}
+
 func main() {
 	// res,length,mess:=add(10,5,23,23,231223,213)
 	// fmt.Printf("\n length = %d \n result = %d \n message :%s",length,res,mess)
@@ -66,6 +80,31 @@ func main() {
 	fmt.Println("Rectangle Info....")
 	day5.DisplayShapeinfo(rect)
 
+	resSqrt, err := CalculateSquareRoot(36)
+	defer func() {
+		if r := recover(); r != nil {
+			log.Println("recover from panic: ", r)
+		}
+	}()
+	if err != nil {
+		//error appear
+		log.Println(err.Error())
+	} else {
+		//result case
+		log.Println("result = ", *resSqrt)
+	}
+
+	capilatize, err := DisplayName("rishav")
+
+	if err != nil {
+		log.Println(err.Error())
+		panic(err.Error())
+	}
+	log.Println("Name:", capilatize)
+	defer log.Println("deferred function called")
+	log.Println("Normal execution")
+	log.Println("Second Normal Execution")
+
 }
 
 func sequencegenrator() func() int {
@@ -73,5 +112,14 @@ func sequencegenrator() func() int {
 	return func() int {
 		i++ //retain
 		return i
+	}
+}
+
+func DisplayName(name string) (string, error) {
+	if len(name) < 5 {
+		println("Invalid Name")
+		return "", errors.New("Length must be greater")
+	} else {
+		return strings.ToUpper(name), nil
 	}
 }
